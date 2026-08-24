@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { LotSpec } from "@/data/catalog";
+import type { LotSpec } from "@/types";
 
 /** Grade tabular de metadados, usada em fichas de lote e de leilão. */
 export function SpecGrid({

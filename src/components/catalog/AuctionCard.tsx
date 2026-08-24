@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 import { StatusBadge } from "./StatusBadge";
-import type { Auction } from "@/data/catalog";
+import type { Auction } from "@/types";
 
 export function AuctionCard({ auction, delay = 0 }: { auction: Auction; delay?: number }) {
   return (

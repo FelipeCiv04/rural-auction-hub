@@ -4,7 +4,8 @@ import { LotCard } from "@/components/catalog/LotCard";
 import { PageIntro } from "@/components/catalog/PageIntro";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { SiteLayoutTabs } from "@/components/catalog/SectionTabs";
-import { formatCurrency, getFeaturedLots, getUpcomingAuctions } from "@/data/catalog";
+import { formatCurrency } from "@/lib/formatters";
+import { getFeaturedLots, getUpcomingAuctions } from "@/services";
 
 export const Route = createFileRoute("/minha-conta")({
   head: () => ({

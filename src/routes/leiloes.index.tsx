@@ -3,7 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AuctionCard } from "@/components/catalog/AuctionCard";
 import { PageIntro } from "@/components/catalog/PageIntro";
 import { SiteLayout } from "@/components/layout/SiteLayout";
-import { getAuctions, statusLabels, type AuctionStatus } from "@/data/catalog";
+import { getAuctions } from "@/services";
+import { statusLabels, type AuctionStatus } from "@/types";
 
 export const Route = createFileRoute("/leiloes/")({
   head: () => ({

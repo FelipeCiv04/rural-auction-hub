@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 
 import { cn } from "@/lib/utils";
-import { categoryLabels, formatCurrency, type Lot, type LotCategory } from "@/data/catalog";
+import { formatCurrency } from "@/lib/formatters";
+import { categoryLabels, type Lot, type LotCategory } from "@/types";
 
 const categoryStyles: Record<LotCategory, string> = {
   elite: "border-primary text-primary",

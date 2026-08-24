@@ -4,7 +4,9 @@ import { CatalogButton } from "@/components/catalog/CatalogButton";
 import { PageIntro } from "@/components/catalog/PageIntro";
 import { StatusBadge } from "@/components/catalog/StatusBadge";
 import { SiteLayout } from "@/components/layout/SiteLayout";
-import { categoryLabels, formatCurrency, getAuctions, getLots } from "@/data/catalog";
+import { formatCurrency } from "@/lib/formatters";
+import { getAuctions, getLots } from "@/services";
+import { categoryLabels } from "@/types";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({

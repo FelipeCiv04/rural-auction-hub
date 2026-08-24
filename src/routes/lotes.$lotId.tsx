@@ -3,12 +3,9 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { CatalogButton } from "@/components/catalog/CatalogButton";
 import { SpecGrid } from "@/components/catalog/SpecGrid";
 import { SiteLayout } from "@/components/layout/SiteLayout";
-import {
-  categoryLabels,
-  formatCurrency,
-  getAuctionById,
-  getLotById,
-} from "@/data/catalog";
+import { formatCurrency } from "@/lib/formatters";
+import { getAuctionById, getLotById } from "@/services";
+import { categoryLabels } from "@/types";
 
 export const Route = createFileRoute("/lotes/$lotId")({
   loader: ({ params }) => {

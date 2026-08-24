@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
 
-import { formatCurrency, liveTicker } from "@/data/catalog";
+import { formatCurrency } from "@/lib/formatters";
+import { getLiveTicker } from "@/services";
 
 export function LiveTickerBar() {
+  const liveTicker = getLiveTicker();
   return (
     <div className="sticky top-0 z-50 flex items-center justify-between gap-4 border-b border-white/10 bg-foreground px-4 py-2 text-background">
       <div className="flex min-w-0 items-center gap-6">

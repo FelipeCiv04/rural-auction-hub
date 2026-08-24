@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { statusLabels, type AuctionStatus } from "@/data/catalog";
+import { statusLabels, type AuctionStatus } from "@/types";
 
 const styles: Record<AuctionStatus, string> = {
   "ao-vivo": "border-live text-live",

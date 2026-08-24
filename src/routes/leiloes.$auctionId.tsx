@@ -4,7 +4,7 @@ import { CatalogButton } from "@/components/catalog/CatalogButton";
 import { LotCard } from "@/components/catalog/LotCard";
 import { StatusBadge } from "@/components/catalog/StatusBadge";
 import { SiteLayout } from "@/components/layout/SiteLayout";
-import { getAuctionById, getLotsByAuction } from "@/data/catalog";
+import { getAuctionById, getLotsByAuction } from "@/services";
 
 export const Route = createFileRoute("/leiloes/$auctionId")({
   loader: ({ params }) => {
