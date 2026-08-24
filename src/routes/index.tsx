@@ -6,7 +6,7 @@ import { AuctionCard } from "@/components/catalog/AuctionCard";
 import { CatalogButton } from "@/components/catalog/CatalogButton";
 import { LotCard } from "@/components/catalog/LotCard";
 import { SiteLayout } from "@/components/layout/SiteLayout";
-import { getFeaturedLots, getUpcomingAuctions } from "@/data/catalog";
+import { getAuctionById, getFeaturedLots, getUpcomingAuctions } from "@/data/catalog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
