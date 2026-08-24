@@ -1,5 +1,66 @@
 import { mockAuctions } from "@/data/mock-auctions";
 import type { Auction, AuctionFilter } from "@/types/auction";
+import { isSupabaseConfigured, supabase } from "@/lib/supabase";
+import type { Database } from "@/types/database";
+import type { SupabaseClient } from "@supabase/supabase-js";
+
+let auctionsCache: Auction[] | null = null;
+
+async function fetchAuctionsFromSupabase(): Promise<void> {
+  if (!isSupabaseConfigured() || !supabase) return;
+
+  try {
+    const client = supabase as unknown as SupabaseClient<Database>;
+    const res = await client.from("auctions").select("*");
+    const data = res.data as Database["public"]["Tables"]["auctions"]["Row"][] | null;
+    const error = res.error as unknown | null;
+
+    if (error) {
+      console.error("[supabase] failed to fetch auctions:", error);
+      return;
+    }
+
+    if (!data) return;
+
+    auctionsCache = data.map((row) => {
+      const startsAt = new Date(row.starts_at);
+      const date = startsAt
+        .toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .toUpperCase();
+
+      const time = startsAt.toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+
+      return {
+        id: row.id,
+        code: row.code,
+        title: row.title,
+        status: row.status,
+        date,
+        time,
+        location: row.location ?? "",
+        offer: row.offer ?? "",
+        promoter: row.promoter ?? "",
+        cover: row.cover_url ?? "",
+        summary: row.summary ?? "",
+        terms: row.terms ?? [],
+      } as Auction;
+    });
+  } catch (err) {
+    console.error("[supabase] unexpected error fetching auctions:", err);
+  }
+}
+
+if (isSupabaseConfigured()) {
+  void fetchAuctionsFromSupabase();
+}
 
 /**
  * Camada de serviço/acesso a dados de leilões (Auctions).
@@ -8,7 +69,7 @@ import type { Auction, AuctionFilter } from "@/types/auction";
  * receber chamadas assíncronas / queries reais a banco de dados.
  */
 export function getAuctions(filter?: AuctionFilter): Auction[] {
-  let result = [...mockAuctions];
+  let result = auctionsCache ? [...auctionsCache] : [...mockAuctions];
 
   if (filter?.status) {
     result = result.filter((auction) => auction.status === filter.status);
@@ -33,9 +94,12 @@ export function getAuctions(filter?: AuctionFilter): Auction[] {
 }
 
 export function getAuctionById(id: string): Auction | undefined {
+  const fromCache = auctionsCache?.find((auction) => auction.id === id);
+  if (fromCache) return fromCache;
   return mockAuctions.find((auction) => auction.id === id);
 }
 
 export function getUpcomingAuctions(limit = 3): Auction[] {
-  return mockAuctions.filter((auction) => auction.status !== "encerrado").slice(0, limit);
+  const source = auctionsCache ?? mockAuctions;
+  return source.filter((auction) => auction.status !== "encerrado").slice(0, limit);
 }

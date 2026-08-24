@@ -6,6 +6,9 @@ import { SiteLayout } from "@/components/layout/SiteLayout";
 import { SiteLayoutTabs } from "@/components/catalog/SectionTabs";
 import { formatCurrency } from "@/lib/formatters";
 import { getFeaturedLots, getUpcomingAuctions } from "@/services";
+import { useAuth } from "@/lib/auth";
+
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/minha-conta")({
   head: () => ({
@@ -36,6 +39,36 @@ const summary = [
 function AccountPage() {
   const watched = getFeaturedLots().slice(0, 2);
   const enrolled = getUpcomingAuctions(2);
+  const { loading, user, profile } = useAuth();
+
+  if (loading) {
+    return (
+      <SiteLayout>
+        <PageIntro eyebrow="Área do Comprador" title="Minha Conta" description="Carregando..." />
+      </SiteLayout>
+    );
+  }
+
+  if (!user) {
+    return (
+      <SiteLayout>
+        <PageIntro
+          eyebrow="Área do Comprador"
+          title="Minha Conta"
+          description="Você precisa estar autenticado para acessar sua conta."
+        />
+        <div className="mx-auto max-w-7xl px-4 py-16">
+          <p className="mb-6">Faça login para acessar seus dados.</p>
+          <Link
+            to="/login"
+            className="inline-block rounded bg-primary px-4 py-2 text-sm text-primary-foreground"
+          >
+            Entrar
+          </Link>
+        </div>
+      </SiteLayout>
+    );
+  }
 
   return (
     <SiteLayout>
@@ -87,12 +120,12 @@ function AccountPage() {
               content: (
                 <dl className="grid gap-6 sm:grid-cols-2">
                   {[
-                    ["Nome", "João da Silva"],
-                    ["Documento", "000.000.000-00"],
-                    ["E-mail", "joao@fazendaboavista.com.br"],
-                    ["Telefone", "(67) 90000-0000"],
-                    ["Propriedade", "Fazenda Boa Vista"],
-                    ["Estado", "MS"],
+                    ["Nome", profile?.full_name ?? "-"],
+                    ["Documento", profile?.document ?? "-"],
+                    ["E-mail", user?.email ?? "-"],
+                    ["Telefone", profile?.phone ?? "-"],
+                    ["Propriedade", "-"],
+                    ["Estado", "-"],
                   ].map(([label, value]) => (
                     <div key={label}>
                       <dt className="meta-label">{label}</dt>

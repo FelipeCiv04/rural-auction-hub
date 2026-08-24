@@ -6,6 +6,7 @@ import { StatusBadge } from "@/components/catalog/StatusBadge";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { formatCurrency } from "@/lib/formatters";
 import { getAuctions, getLots } from "@/services";
+import { useAuth } from "@/lib/auth";
 import { categoryLabels } from "@/types";
 
 export const Route = createFileRoute("/admin")({
@@ -37,6 +38,37 @@ const metrics = [
 function AdminPage() {
   const auctions = getAuctions();
   const lots = getLots();
+
+  const { loading, user, role } = useAuth();
+
+  if (loading) {
+    return (
+      <SiteLayout>
+        <PageIntro eyebrow="Operação" title="Painel Administrativo" description="Carregando..." />
+      </SiteLayout>
+    );
+  }
+
+  if (!user || role !== "admin") {
+    return (
+      <SiteLayout>
+        <PageIntro
+          eyebrow="Operação"
+          title="Acesso Negado"
+          description="Você não possui permissões para acessar o painel administrativo."
+        />
+        <div className="mx-auto max-w-7xl px-4 py-16">
+          <p className="mb-6">Esta área é restrita a administradores.</p>
+          <Link
+            to="/"
+            className="inline-block rounded bg-primary px-4 py-2 text-sm text-primary-foreground"
+          >
+            Voltar
+          </Link>
+        </div>
+      </SiteLayout>
+    );
+  }
 
   return (
     <SiteLayout>
