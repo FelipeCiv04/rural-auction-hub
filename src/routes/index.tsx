@@ -31,7 +31,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const upcoming = getUpcomingAuctions(3);
   const featured = getFeaturedLots();
-  const highlight = upcoming[0];
+  const highlight = upcoming[0]!;
 
   return (
     <SiteLayout>

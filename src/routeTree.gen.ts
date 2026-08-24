@@ -10,33 +10,80 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LeiloesIndexRouteImport } from './routes/leiloes.index'
+import { Route as LeiloesAuctionIdRouteImport } from './routes/leiloes.$auctionId'
+import { Route as LotesIndexRouteImport } from './routes/lotes.index'
+import { Route as LotesLotIdRouteImport } from './routes/lotes.$lotId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LeiloesIndexRoute = LeiloesIndexRouteImport.update({
+  id: '/leiloes/',
+  path: '/leiloes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeiloesAuctionIdRoute = LeiloesAuctionIdRouteImport.update({
+  id: '/leiloes/$auctionId',
+  path: '/leiloes/$auctionId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LotesIndexRoute = LotesIndexRouteImport.update({
+  id: '/lotes/',
+  path: '/lotes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LotesLotIdRoute = LotesLotIdRouteImport.update({
+  id: '/lotes/$lotId',
+  path: '/lotes/$lotId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/leiloes/$auctionId': typeof LeiloesAuctionIdRoute
+  '/lotes/$lotId': typeof LotesLotIdRoute
+  '/leiloes/': typeof LeiloesIndexRoute
+  '/lotes/': typeof LotesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/leiloes/$auctionId': typeof LeiloesAuctionIdRoute
+  '/lotes/$lotId': typeof LotesLotIdRoute
+  '/leiloes': typeof LeiloesIndexRoute
+  '/lotes': typeof LotesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/leiloes/$auctionId': typeof LeiloesAuctionIdRoute
+  '/lotes/$lotId': typeof LotesLotIdRoute
+  '/leiloes/': typeof LeiloesIndexRoute
+  '/lotes/': typeof LotesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/leiloes/$auctionId' | '/lotes/$lotId' | '/leiloes/' | '/lotes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/leiloes/$auctionId' | '/lotes/$lotId' | '/leiloes' | '/lotes'
+  id:
+    | '__root__'
+    | '/'
+    | '/leiloes/$auctionId'
+    | '/lotes/$lotId'
+    | '/leiloes/'
+    | '/lotes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LeiloesAuctionIdRoute: typeof LeiloesAuctionIdRoute
+  LotesLotIdRoute: typeof LotesLotIdRoute
+  LeiloesIndexRoute: typeof LeiloesIndexRoute
+  LotesIndexRoute: typeof LotesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +95,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/leiloes/': {
+      id: '/leiloes/'
+      path: '/leiloes'
+      fullPath: '/leiloes/'
+      preLoaderRoute: typeof LeiloesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leiloes/$auctionId': {
+      id: '/leiloes/$auctionId'
+      path: '/leiloes/$auctionId'
+      fullPath: '/leiloes/$auctionId'
+      preLoaderRoute: typeof LeiloesAuctionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lotes/': {
+      id: '/lotes/'
+      path: '/lotes'
+      fullPath: '/lotes/'
+      preLoaderRoute: typeof LotesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lotes/$lotId': {
+      id: '/lotes/$lotId'
+      path: '/lotes/$lotId'
+      fullPath: '/lotes/$lotId'
+      preLoaderRoute: typeof LotesLotIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LeiloesAuctionIdRoute: LeiloesAuctionIdRoute,
+  LotesLotIdRoute: LotesLotIdRoute,
+  LeiloesIndexRoute: LeiloesIndexRoute,
+  LotesIndexRoute: LotesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
