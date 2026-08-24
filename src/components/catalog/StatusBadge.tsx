@@ -7,13 +7,7 @@ const styles: Record<AuctionStatus, string> = {
   encerrado: "border-border text-muted-foreground",
 };
 
-export function StatusBadge({
-  status,
-  className,
-}: {
-  status: AuctionStatus;
-  className?: string;
-}) {
+export function StatusBadge({ status, className }: { status: AuctionStatus; className?: string }) {
   return (
     <span
       className={cn(
@@ -22,7 +16,9 @@ export function StatusBadge({
         className,
       )}
     >
-      {status === "ao-vivo" ? <span className="size-1.5 rounded-full bg-live animate-live" /> : null}
+      {status === "ao-vivo" ? (
+        <span className="size-1.5 rounded-full bg-live animate-live" />
+      ) : null}
       {statusLabels[status]}
     </span>
   );

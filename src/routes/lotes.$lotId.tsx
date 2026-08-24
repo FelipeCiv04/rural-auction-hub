@@ -16,7 +16,10 @@ export const Route = createFileRoute("/lotes/$lotId")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Lote indisponível — Terroir Remates" }, { name: "robots", content: "noindex" }],
+        meta: [
+          { title: "Lote indisponível — Terroir Remates" },
+          { name: "robots", content: "noindex" },
+        ],
       };
     }
     const { lot } = loaderData;

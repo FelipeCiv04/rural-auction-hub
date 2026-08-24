@@ -15,7 +15,10 @@ export const Route = createFileRoute("/leiloes/$auctionId")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Leilão indisponível — Terroir Remates" }, { name: "robots", content: "noindex" }],
+        meta: [
+          { title: "Leilão indisponível — Terroir Remates" },
+          { name: "robots", content: "noindex" },
+        ],
       };
     }
     const { auction } = loaderData;

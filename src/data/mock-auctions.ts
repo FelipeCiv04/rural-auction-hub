@@ -92,8 +92,7 @@ export const mockAuctions: Auction[] = [
     offer: "44 Touros Angus",
     promoter: "Estância Boa Vista",
     cover: heroTouro,
-    summary:
-      "Edição encerrada com 100% dos lotes arrematados e média de R$ 61.400 por reprodutor.",
+    summary: "Edição encerrada com 100% dos lotes arrematados e média de R$ 61.400 por reprodutor.",
     terms: ["Resultados consolidados disponíveis no relatório da edição."],
   },
 ];

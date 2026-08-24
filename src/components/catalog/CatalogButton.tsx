@@ -31,7 +31,5 @@ export type CatalogButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof catalogButtonVariants>;
 
 export function CatalogButton({ className, variant, size, ...props }: CatalogButtonProps) {
-  return (
-    <button className={cn(catalogButtonVariants({ variant, size }), className)} {...props} />
-  );
+  return <button className={cn(catalogButtonVariants({ variant, size }), className)} {...props} />;
 }

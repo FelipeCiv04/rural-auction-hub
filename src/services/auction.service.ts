@@ -37,7 +37,5 @@ export function getAuctionById(id: string): Auction | undefined {
 }
 
 export function getUpcomingAuctions(limit = 3): Auction[] {
-  return mockAuctions
-    .filter((auction) => auction.status !== "encerrado")
-    .slice(0, limit);
+  return mockAuctions.filter((auction) => auction.status !== "encerrado").slice(0, limit);
 }

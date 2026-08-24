@@ -34,7 +34,5 @@ export function getLotsByAuction(auctionId: string): Lot[] {
 }
 
 export function getFeaturedLots(): Lot[] {
-  return featuredLotIds
-    .map((id) => getLotById(id))
-    .filter((lot): lot is Lot => Boolean(lot));
+  return featuredLotIds.map((id) => getLotById(id)).filter((lot): lot is Lot => Boolean(lot));
 }
