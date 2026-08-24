@@ -10,6 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as MinhaContaRouteImport } from './routes/minha-conta'
 import { Route as LeiloesIndexRouteImport } from './routes/leiloes.index'
 import { Route as LeiloesAuctionIdRouteImport } from './routes/leiloes.$auctionId'
 import { Route as LotesIndexRouteImport } from './routes/lotes.index'
@@ -18,6 +22,26 @@ import { Route as LotesLotIdRouteImport } from './routes/lotes.$lotId'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinhaContaRoute = MinhaContaRouteImport.update({
+  id: '/minha-conta',
+  path: '/minha-conta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeiloesIndexRoute = LeiloesIndexRouteImport.update({
@@ -43,6 +67,10 @@ const LotesLotIdRoute = LotesLotIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/minha-conta': typeof MinhaContaRoute
   '/leiloes/$auctionId': typeof LeiloesAuctionIdRoute
   '/lotes/$lotId': typeof LotesLotIdRoute
   '/leiloes/': typeof LeiloesIndexRoute
@@ -50,6 +78,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/minha-conta': typeof MinhaContaRoute
   '/leiloes/$auctionId': typeof LeiloesAuctionIdRoute
   '/lotes/$lotId': typeof LotesLotIdRoute
   '/leiloes': typeof LeiloesIndexRoute
@@ -58,6 +90,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/minha-conta': typeof MinhaContaRoute
   '/leiloes/$auctionId': typeof LeiloesAuctionIdRoute
   '/lotes/$lotId': typeof LotesLotIdRoute
   '/leiloes/': typeof LeiloesIndexRoute
@@ -66,12 +102,33 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/leiloes/$auctionId' | '/lotes/$lotId' | '/leiloes/' | '/lotes/'
+    | '/'
+    | '/admin'
+    | '/cadastro'
+    | '/login'
+    | '/minha-conta'
+    | '/leiloes/$auctionId'
+    | '/lotes/$lotId'
+    | '/leiloes/'
+    | '/lotes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/leiloes/$auctionId' | '/lotes/$lotId' | '/leiloes' | '/lotes'
+  to:
+    | '/'
+    | '/admin'
+    | '/cadastro'
+    | '/login'
+    | '/minha-conta'
+    | '/leiloes/$auctionId'
+    | '/lotes/$lotId'
+    | '/leiloes'
+    | '/lotes'
   id:
     | '__root__'
     | '/'
+    | '/admin'
+    | '/cadastro'
+    | '/login'
+    | '/minha-conta'
     | '/leiloes/$auctionId'
     | '/lotes/$lotId'
     | '/leiloes/'
@@ -80,6 +137,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  CadastroRoute: typeof CadastroRoute
+  LoginRoute: typeof LoginRoute
+  MinhaContaRoute: typeof MinhaContaRoute
   LeiloesAuctionIdRoute: typeof LeiloesAuctionIdRoute
   LotesLotIdRoute: typeof LotesLotIdRoute
   LeiloesIndexRoute: typeof LeiloesIndexRoute
@@ -93,6 +154,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/minha-conta': {
+      id: '/minha-conta'
+      path: '/minha-conta'
+      fullPath: '/minha-conta'
+      preLoaderRoute: typeof MinhaContaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/leiloes/': {
@@ -128,6 +217,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  CadastroRoute: CadastroRoute,
+  LoginRoute: LoginRoute,
+  MinhaContaRoute: MinhaContaRoute,
   LeiloesAuctionIdRoute: LeiloesAuctionIdRoute,
   LotesLotIdRoute: LotesLotIdRoute,
   LeiloesIndexRoute: LeiloesIndexRoute,
