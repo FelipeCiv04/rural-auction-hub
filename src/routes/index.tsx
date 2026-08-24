@@ -31,7 +31,8 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const upcoming = getUpcomingAuctions(3);
   const featured = getFeaturedLots();
-  const highlight = upcoming[0]!;
+  // O banner destaca sempre a "Liquidação Genética Prime".
+  const highlight = getAuctionById("liquidacao-genetica-prime")!;
 
   return (
     <SiteLayout>
