@@ -43,88 +43,101 @@ function HomePage() {
   return (
     <SiteLayout>
       {/* Banner principal */}
-      <section className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid items-center gap-8 md:grid-cols-12">
-          <div className="animate-entry md:col-span-7">
-            <div className="mb-4 inline-flex items-center gap-2 bg-primary/10 px-2 py-1 text-primary">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest">
-                Próximo Grande Evento
-              </span>
+      <section className="relative overflow-hidden border-b border-border">
+        <img
+          src={heroTouro}
+          alt="Touro Angus em pavilhão de remate"
+          width={1200}
+          height={1504}
+          className="absolute inset-0 size-full object-cover object-center opacity-45"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30"
+        />
+        <div className="relative mx-auto max-w-7xl px-4 py-20 md:py-32">
+          <div className="max-w-3xl animate-entry">
+            <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
+              Próximo grande evento
+            </p>
+            <h1 className="mb-6 font-display text-5xl font-black leading-[0.98] md:text-7xl">
+              Liquidação <span className="text-gradient-ember">Genética</span> Prime
+            </h1>
+            <p className="mb-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              Remates de bovinos e caprinos de alto padrão com catálogo digital, ficha técnica
+              completa e transmissão de pregão ao vivo.
+            </p>
+            <div className="mb-10 grid max-w-2xl grid-cols-2 gap-4 sm:grid-cols-3">
+              {[
+                { label: "Data", value: highlight.date },
+                { label: "Local", value: highlight.location },
+                { label: "Oferta", value: highlight.offer },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="min-w-0 rounded-xl border border-border bg-surface/70 p-4 backdrop-blur"
+                >
+                  <p className="meta-label">{item.label}</p>
+                  <p className="truncate text-sm font-semibold">{item.value}</p>
+                </div>
+              ))}
             </div>
-            <h2 className="mb-6 text-6xl font-black uppercase leading-[0.9] tracking-tighter md:text-8xl">
-              Liquidação
-              <br />
-              <span className="text-muted-foreground/25">Genética</span> Prime
-            </h2>
-            <div className="flex flex-wrap gap-8 border-l-2 border-primary pl-6 font-mono text-sm">
-              <div>
-                <p className="mb-1 text-[10px] uppercase text-muted-foreground">Data</p>
-                <p className="font-bold">{highlight.date}</p>
-              </div>
-              <div>
-                <p className="mb-1 text-[10px] uppercase text-muted-foreground">Local</p>
-                <p className="font-bold uppercase">{highlight.location}</p>
-              </div>
-              <div>
-                <p className="mb-1 text-[10px] uppercase text-muted-foreground">Oferta</p>
-                <p className="font-bold uppercase">{highlight.offer}</p>
-              </div>
-            </div>
-          </div>
-          <div className="animate-entry [animation-delay:150ms] md:col-span-5">
-            <div className="relative overflow-hidden rounded-xl border border-border">
-              <img
-                src={heroTouro}
-                alt="Touro Angus em pavilhão de remate"
-                width={1200}
-                height={1504}
-                className="aspect-[4/5] w-full bg-surface-muted object-cover"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                <Link to="/leiloes/$auctionId" params={{ auctionId: highlight.id }}>
-                  <CatalogButton variant="outline" size="block" className="border-none bg-surface">
-                    Ver Catálogo Digital
-                  </CatalogButton>
-                </Link>
-              </div>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/leiloes/$auctionId" params={{ auctionId: highlight.id }}>
+                <CatalogButton variant="solid">Ver catálogo digital</CatalogButton>
+              </Link>
+              <Link to="/lotes">
+                <CatalogButton variant="outline">Explorar lotes</CatalogButton>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
       {/* Próximos leilões */}
-      <section className="border-y border-border bg-surface-muted py-20">
+      <section className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="mb-12 flex items-end justify-between gap-6">
-            <h3 className="text-2xl font-black uppercase tracking-tighter">Próximos Leilões</h3>
-            <Link to="/leiloes" className="eyebrow border-b border-foreground pb-0.5">
-              Ver agenda completa
+          <div className="mb-10 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
+            <div className="min-w-0">
+              <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
+                Agenda
+              </p>
+              <h2 className="font-display text-3xl font-black md:text-4xl">Próximos leilões</h2>
+            </div>
+            <Link to="/leiloes" className="eyebrow shrink-0 text-primary hover:underline">
+              Ver agenda
             </Link>
           </div>
-          <div className="grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {upcoming.map((auction, index) => (
-              <AuctionCard key={auction.id} auction={auction} delay={200 + index * 50} />
+              <AuctionCard key={auction.id} auction={auction} delay={100 + index * 80} />
             ))}
           </div>
         </div>
       </section>
 
       {/* Lotes em destaque */}
-      <section className="py-20">
+      <section className="border-y border-border bg-surface/40 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="mb-12 flex items-end justify-between gap-6">
-            <h3 className="text-2xl font-black uppercase tracking-tighter">Lotes em Destaque</h3>
-            <Link to="/lotes" className="eyebrow border-b border-foreground pb-0.5">
-              Ver todos os lotes
+          <div className="mb-10 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
+            <div className="min-w-0">
+              <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
+                Catálogo
+              </p>
+              <h2 className="font-display text-3xl font-black md:text-4xl">Lotes em destaque</h2>
+            </div>
+            <Link to="/lotes" className="eyebrow shrink-0 text-primary hover:underline">
+              Ver todos
             </Link>
           </div>
-          <div className="grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((lot, index) => (
-              <LotCard key={lot.id} lot={lot} delay={200 + index * 50} />
+              <LotCard key={lot.id} lot={lot} delay={100 + index * 80} />
             ))}
           </div>
         </div>
       </section>
+
 
       {/* Institucional */}
       <section className="mx-auto max-w-7xl px-4 py-32">
