@@ -4,21 +4,21 @@ import type { ButtonHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Botão do catálogo — caixa alta, canto reto, sem sombra.
- * Substitui o botão shadcn padrão para manter a identidade agro-industrial.
+ * Botão do catálogo — pílula com acento ember, mantendo a identidade
+ * moderna da plataforma de remates.
  */
 export const catalogButtonVariants = cva(
-  "inline-flex items-center justify-center gap-2 eyebrow transition-colors disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 rounded-full eyebrow transition-all disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        solid: "bg-foreground text-background hover:bg-primary",
-        outline: "border border-border text-foreground hover:bg-surface-muted",
-        accent: "bg-accent text-accent-foreground hover:bg-primary",
-        ghost: "text-foreground underline-offset-4 hover:underline",
+        solid: "bg-gradient-ember text-primary-foreground shadow-ember hover:opacity-90",
+        outline: "border border-border text-foreground hover:border-primary/60 hover:text-primary",
+        accent: "bg-foreground text-background hover:bg-foreground/90",
+        ghost: "text-muted-foreground hover:text-primary",
       },
       size: {
-        md: "px-8 py-3",
+        md: "px-7 py-3",
         sm: "px-4 py-2",
         block: "w-full px-8 py-4",
       },

@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
 
 import { StatusBadge } from "./StatusBadge";
 import type { Auction } from "@/types";
@@ -8,41 +9,49 @@ export function AuctionCard({ auction, delay = 0 }: { auction: Auction; delay?: 
     <Link
       to="/leiloes/$auctionId"
       params={{ auctionId: auction.id }}
-      className="group flex flex-col bg-surface ring-1 ring-black/[0.05] transition-all animate-entry hover:ring-primary/30"
+      className="group flex flex-col overflow-hidden rounded-xl border border-border bg-surface transition-all animate-entry hover:-translate-y-1 hover:border-primary/40 hover:shadow-elevated"
       style={{ animationDelay: `${delay}ms` }}
     >
-      <img
-        src={auction.cover}
-        alt={auction.title}
-        loading="lazy"
-        width={800}
-        height={450}
-        className="aspect-video w-full bg-surface-muted object-cover grayscale transition-all group-hover:grayscale-0"
-      />
-      <div className="flex flex-1 flex-col p-6">
-        <div className="mb-4 flex items-start justify-between gap-4">
-          <div>
-            <span className="mb-1 block font-mono text-[10px] uppercase tracking-tighter text-muted-foreground">
-              {auction.date} • {auction.time}
-            </span>
-            <h3 className="text-xl font-bold uppercase tracking-tight">{auction.title}</h3>
-          </div>
-          <StatusBadge status={auction.status} className="shrink-0" />
+      <div className="relative overflow-hidden">
+        <img
+          src={auction.cover}
+          alt={auction.title}
+          loading="lazy"
+          width={800}
+          height={450}
+          className="aspect-video w-full bg-surface-muted object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
+        <div className="absolute left-4 top-4">
+          <StatusBadge status={auction.status} />
         </div>
-        <div className="mt-auto grid grid-cols-2 gap-y-4 border-t border-border pt-4">
-          <div>
-            <p className="meta-label">Local</p>
-            <p className="text-sm font-bold">{auction.location}</p>
-          </div>
-          <div>
+      </div>
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+          <CalendarDays className="size-3 shrink-0" />
+          <span className="truncate">
+            {auction.date} · {auction.time}
+          </span>
+        </div>
+        <h3 className="mb-3 font-display text-xl font-extrabold leading-tight">{auction.title}</h3>
+        <div className="mb-5 flex items-center gap-2 text-sm text-muted-foreground">
+          <MapPin className="size-3.5 shrink-0" />
+          <span className="truncate">{auction.location}</span>
+        </div>
+        <div className="mt-auto grid grid-cols-2 gap-4 border-t border-border pt-4">
+          <div className="min-w-0">
             <p className="meta-label">Oferta</p>
-            <p className="text-sm font-bold">{auction.offer}</p>
+            <p className="truncate text-sm font-semibold">{auction.offer}</p>
           </div>
-          <div className="col-span-2">
+          <div className="min-w-0">
             <p className="meta-label">Promotor</p>
-            <p className="text-sm font-bold">{auction.promoter}</p>
+            <p className="truncate text-sm font-semibold">{auction.promoter}</p>
           </div>
         </div>
+        <span className="mt-4 inline-flex items-center gap-1.5 eyebrow text-primary">
+          Ver leilão
+          <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+        </span>
       </div>
     </Link>
   );

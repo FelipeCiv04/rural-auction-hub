@@ -176,9 +176,9 @@ function LotDetailPage() {
               alt={lot.title}
               width={1200}
               height={1200}
-              className="aspect-square w-full bg-surface-muted object-cover ring-1 ring-black/5"
+              className="aspect-square w-full bg-surface-muted object-cover rounded-xl border border-border"
             />
-            <div className="mt-10 bg-surface p-6 ring-1 ring-black/[0.05]">
+            <div className="mt-10 bg-surface p-6 rounded-xl border border-border">
               <h2 className="eyebrow mb-4 text-muted-foreground">Descrição Técnica</h2>
               <p className="leading-relaxed">{lot.description}</p>
               <SpecGrid specs={lot.specs} columns={4} className="mt-8" />
@@ -248,12 +248,12 @@ function LotDetailPage() {
               {bidSuccess ? <p className="mt-3 text-sm text-primary">{bidSuccess}</p> : null}
             </div>
 
-            <div className="mt-8 bg-surface p-6 ring-1 ring-black/[0.05]">
+            <div className="mt-8 bg-surface p-6 rounded-xl border border-border">
               <h2 className="eyebrow mb-4 text-muted-foreground">Vendedor</h2>
               <p className="text-sm font-bold uppercase">{lot.seller}</p>
             </div>
 
-            <div className="mt-8 bg-surface p-6 ring-1 ring-black/[0.05]">
+            <div className="mt-8 bg-surface p-6 rounded-xl border border-border">
               <h2 className="eyebrow mb-4 text-muted-foreground">Histórico de Lances</h2>
               {bidHistory.length > 0 ? (
                 <ul className="divide-y divide-border font-mono text-xs">

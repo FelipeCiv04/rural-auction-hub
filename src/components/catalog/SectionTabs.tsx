@@ -9,12 +9,10 @@ interface Section {
 /** Blocos de informação empilhados, no formato de ficha do catálogo. */
 export function SiteLayoutTabs({ sections }: { sections: Section[] }) {
   return (
-    <div className="mt-16 grid gap-1 lg:grid-cols-2">
+    <div className="mt-14 grid gap-4 lg:grid-cols-2">
       {sections.map((section) => (
-        <section key={section.id} className="bg-surface p-6 ring-1 ring-black/[0.05]">
-          <h2 className="eyebrow mb-6 border-b border-border pb-3 text-muted-foreground">
-            {section.title}
-          </h2>
+        <section key={section.id} className="rounded-xl border border-border bg-surface p-6">
+          <h2 className="eyebrow mb-5 border-b border-border pb-3 text-primary">{section.title}</h2>
           {section.content}
         </section>
       ))}
