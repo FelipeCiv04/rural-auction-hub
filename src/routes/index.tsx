@@ -138,7 +138,6 @@ function HomePage() {
         </div>
       </section>
 
-
       {/* Institucional */}
       <section className="mx-auto max-w-7xl px-4 py-20 md:py-28">
         <div className="grid items-center gap-12 md:grid-cols-2">
@@ -183,7 +182,6 @@ function HomePage() {
           </div>
         </div>
       </section>
-
     </SiteLayout>
   );
 }
