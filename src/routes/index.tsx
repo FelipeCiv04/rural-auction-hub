@@ -140,21 +140,33 @@ function HomePage() {
 
 
       {/* Institucional */}
-      <section className="mx-auto max-w-7xl px-4 py-32">
-        <div className="grid gap-16 md:grid-cols-2">
+      <section className="mx-auto max-w-7xl px-4 py-20 md:py-28">
+        <div className="grid items-center gap-12 md:grid-cols-2">
           <div className="flex flex-col justify-center">
-            <h2 className="mb-4 font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
+            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
               História &amp; Tradição
-            </h2>
-            <h3 className="mb-8 text-5xl font-black uppercase leading-[0.9] tracking-tighter">
+            </p>
+            <h2 className="mb-6 font-display text-4xl font-black leading-[1.02] md:text-5xl">
               Onde a martelada encontra a confiança.
-            </h3>
-            <p className="mb-6 max-w-md leading-relaxed text-muted-foreground">
+            </h2>
+            <p className="mb-8 max-w-md leading-relaxed text-muted-foreground">
               Há mais de três décadas, transformamos o mercado de leilões rurais em uma plataforma
               de precisão genética e transparência comercial. Unimos a tradição do campo com a
               tecnologia do pregão digital.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="mb-8 grid grid-cols-3 gap-4">
+              {[
+                { value: "+4.2k", label: "Lotes arrematados" },
+                { value: "32", label: "Anos de pregão" },
+                { value: "98%", label: "Índice de liquidez" },
+              ].map((stat) => (
+                <div key={stat.label} className="rounded-xl border border-border bg-surface p-4">
+                  <p className="font-display text-2xl font-black text-primary">{stat.value}</p>
+                  <p className="meta-label mt-1">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-3">
               <CatalogButton variant="solid">Nossa História</CatalogButton>
               <CatalogButton variant="outline">Relatório Anual</CatalogButton>
             </div>
@@ -166,17 +178,12 @@ function HomePage() {
               loading="lazy"
               width={1000}
               height={800}
-              className="aspect-[4/3] w-full bg-surface-muted object-cover"
+              className="aspect-[4/3] w-full rounded-xl border border-border bg-surface-muted object-cover shadow-elevated"
             />
-            <div className="absolute -bottom-8 -left-4 max-w-[240px] bg-primary p-8 text-primary-foreground md:-left-8">
-              <p className="text-3xl font-black tracking-tighter">+4.2k</p>
-              <p className="font-mono text-[10px] uppercase tracking-widest opacity-80">
-                Lotes arrematados este ano
-              </p>
-            </div>
           </div>
         </div>
       </section>
+
     </SiteLayout>
   );
 }
