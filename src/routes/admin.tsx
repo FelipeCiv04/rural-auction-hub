@@ -397,7 +397,7 @@ function AdminPage() {
             </span>
           </div>
           <form
-            className="grid gap-4 bg-surface p-6 ring-1 ring-black/[0.05] md:grid-cols-2"
+            className="grid gap-4 bg-surface p-6 rounded-xl border border-border md:grid-cols-2"
             onSubmit={handleAuctionSubmit}
           >
             <h3 className="eyebrow md:col-span-2">
@@ -492,7 +492,7 @@ function AdminPage() {
             <span className="font-mono text-xs text-muted-foreground">{lots.length} registros</span>
           </div>
           <form
-            className="grid gap-4 bg-surface p-6 ring-1 ring-black/[0.05] md:grid-cols-2"
+            className="grid gap-4 bg-surface p-6 rounded-xl border border-border md:grid-cols-2"
             onSubmit={handleLotSubmit}
           >
             <h3 className="eyebrow md:col-span-2">{editingLotId ? "Editar lote" : "Novo lote"}</h3>
@@ -699,7 +699,7 @@ function AdminAuctionTable({
   onDelete: (auction: AuctionRow) => Promise<void>;
 }) {
   return (
-    <div className="overflow-x-auto bg-surface ring-1 ring-black/[0.05]">
+    <div className="overflow-x-auto bg-surface rounded-xl border border-border">
       <table className="w-full min-w-[780px] text-left">
         <thead>
           <tr className="border-b border-border">
@@ -775,7 +775,7 @@ function AdminLotTable({
 }) {
   const auctionNames = new Map(auctions.map((auction) => [auction.id, auction.title]));
   return (
-    <div className="overflow-x-auto bg-surface ring-1 ring-black/[0.05]">
+    <div className="overflow-x-auto bg-surface rounded-xl border border-border">
       <table className="w-full min-w-[900px] text-left">
         <thead>
           <tr className="border-b border-border">

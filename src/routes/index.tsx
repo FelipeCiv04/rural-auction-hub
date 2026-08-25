@@ -72,7 +72,7 @@ function HomePage() {
             </div>
           </div>
           <div className="animate-entry [animation-delay:150ms] md:col-span-5">
-            <div className="relative overflow-hidden ring-1 ring-black/5">
+            <div className="relative overflow-hidden rounded-xl border border-border">
               <img
                 src={heroTouro}
                 alt="Touro Angus em pavilhão de remate"

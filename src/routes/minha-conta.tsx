@@ -165,7 +165,7 @@ function AccountPage() {
         ) : null}
         <div className="grid gap-1 sm:grid-cols-2 lg:grid-cols-4">
           {summary.map((item) => (
-            <div key={item.label} className="bg-surface p-6 ring-1 ring-black/[0.05]">
+            <div key={item.label} className="bg-surface p-6 rounded-xl border border-border">
               <p className="meta-label">{item.label}</p>
               <p className="mt-2 text-3xl font-black tracking-tighter">{item.value}</p>
             </div>

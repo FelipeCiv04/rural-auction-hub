@@ -76,7 +76,7 @@ function AuctionDetailPage() {
               alt={auction.title}
               width={1200}
               height={900}
-              className="aspect-[4/3] w-full bg-surface-muted object-cover ring-1 ring-black/5"
+              className="aspect-[4/3] w-full bg-surface-muted object-cover rounded-xl border border-border"
             />
           </div>
         </div>
@@ -101,7 +101,7 @@ function AuctionDetailPage() {
             )}
           </div>
           <aside className="lg:col-span-4">
-            <div className="bg-surface p-6 ring-1 ring-black/[0.05]">
+            <div className="bg-surface p-6 rounded-xl border border-border">
               <h3 className="eyebrow mb-6 text-muted-foreground">Condições do Remate</h3>
               <ul className="space-y-4 text-sm leading-relaxed">
                 {auction.terms.map((term) => (
