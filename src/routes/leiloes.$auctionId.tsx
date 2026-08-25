@@ -4,13 +4,13 @@ import { CatalogButton } from "@/components/catalog/CatalogButton";
 import { LotCard } from "@/components/catalog/LotCard";
 import { StatusBadge } from "@/components/catalog/StatusBadge";
 import { SiteLayout } from "@/components/layout/SiteLayout";
-import { getAuctionById, getLotsByAuction } from "@/services";
+import { loadAuctionById, loadLotsByAuction } from "@/services";
 
 export const Route = createFileRoute("/leiloes/$auctionId")({
-  loader: ({ params }) => {
-    const auction = getAuctionById(params.auctionId);
+  loader: async ({ params }) => {
+    const auction = await loadAuctionById(params.auctionId);
     if (!auction) throw notFound();
-    return { auction, lots: getLotsByAuction(auction.id) };
+    return { auction, lots: await loadLotsByAuction(auction.id) };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {

@@ -4,10 +4,14 @@ import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import type { Database } from "@/types/database";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+export type LotRow = Database["public"]["Tables"]["lots"]["Row"];
+export type LotInsert = Database["public"]["Tables"]["lots"]["Insert"];
+export type LotUpdate = Database["public"]["Tables"]["lots"]["Update"];
+
 let lotsCache: Lot[] | null = null;
 
-async function fetchLotsFromSupabase(): Promise<void> {
-  if (!isSupabaseConfigured() || !supabase) return;
+async function fetchLotsFromSupabase(): Promise<Lot[] | null> {
+  if (!isSupabaseConfigured() || !supabase) return null;
 
   try {
     const client = supabase as unknown as SupabaseClient<Database>;
@@ -26,13 +30,15 @@ async function fetchLotsFromSupabase(): Promise<void> {
 
     if (lotsError) {
       console.error("[supabase] failed to fetch lots:", lotsError);
-      return;
+      return null;
     }
     if (specsError) {
       console.error("[supabase] failed to fetch lot specs:", specsError);
+      return null;
     }
     if (bidsError) {
       console.error("[supabase] failed to fetch bid history:", bidsError);
+      return null;
     }
 
     const specsByLot: Record<string, { label: string; value: string }[]> = {};
@@ -70,8 +76,10 @@ async function fetchLotsFromSupabase(): Promise<void> {
         bidHistory: bidsByLot[row.id] ?? [],
       } as Lot;
     });
+    return lotsCache;
   } catch (err) {
     console.error("[supabase] unexpected error fetching lots/specs/bids:", err);
+    return null;
   }
 }
 
@@ -123,4 +131,73 @@ export function getFeaturedLots(): Lot[] {
   }
 
   return featuredLotIds.map((id) => getLotById(id)).filter((lot): lot is Lot => Boolean(lot));
+}
+
+function filterLots(source: Lot[], filter?: LotFilter): Lot[] {
+  let result = [...source];
+  if (filter?.category) result = result.filter((lot) => lot.category === filter.category);
+  if (filter?.auctionId) result = result.filter((lot) => lot.auctionId === filter.auctionId);
+  if (filter?.featured) result = result.filter((lot) => featuredLotIds.includes(lot.id));
+  return result;
+}
+
+export async function loadLots(filter?: LotFilter): Promise<Lot[]> {
+  if (!isSupabaseConfigured()) return filterLots(mockLots, filter);
+  const source = lotsCache ?? (await fetchLotsFromSupabase()) ?? mockLots;
+  return filterLots(source, filter);
+}
+
+export async function loadLotById(id: string): Promise<Lot | undefined> {
+  const lots = await loadLots();
+  return lots.find((lot) => lot.id === id);
+}
+
+export async function loadLotsByAuction(auctionId: string): Promise<Lot[]> {
+  return loadLots({ auctionId });
+}
+
+export async function loadFeaturedLots(): Promise<Lot[]> {
+  return loadLots({ featured: true });
+}
+
+async function getAdminClient(): Promise<SupabaseClient<Database>> {
+  if (!isSupabaseConfigured() || !supabase) {
+    throw new Error("Supabase não está configurado.");
+  }
+
+  return supabase;
+}
+
+export async function listLotsAdmin(): Promise<LotRow[]> {
+  const client = await getAdminClient();
+  const { data, error } = await client
+    .from("lots")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+}
+
+export async function createLot(payload: LotInsert): Promise<LotRow> {
+  const client = await getAdminClient();
+  const { data, error } = await client.from("lots").insert(payload).select().single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function updateLot(id: string, payload: LotUpdate): Promise<LotRow> {
+  const client = await getAdminClient();
+  const { data, error } = await client.from("lots").update(payload).eq("id", id).select().single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function deleteLot(id: string): Promise<void> {
+  const client = await getAdminClient();
+  const { error } = await client.from("lots").delete().eq("id", id);
+
+  if (error) throw error;
 }

@@ -57,6 +57,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       } catch (err) {
         console.error("[auth] failed to load profile:", err);
+        setProfile(null);
+        setRole(null);
       }
     }
 
@@ -86,6 +88,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setRole(data?.role ?? null);
           } catch (err) {
             console.error("[auth] failed to refresh profile:", err);
+            setProfile(null);
+            setRole(null);
           }
         } else {
           setProfile(null);
@@ -185,6 +189,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (err) {
       console.error("[auth] refreshProfile failed:", err);
+      setProfile(null);
+      setRole(null);
     }
   }
 

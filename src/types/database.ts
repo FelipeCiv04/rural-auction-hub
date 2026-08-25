@@ -13,6 +13,7 @@ export interface Database {
   public: {
     Tables: {
       profiles: {
+        Relationships: [];
         Row: {
           id: string;
           full_name: string;
@@ -41,6 +42,7 @@ export interface Database {
         };
       };
       auctions: {
+        Relationships: [];
         Row: {
           id: string;
           code: string;
@@ -87,6 +89,7 @@ export interface Database {
         };
       };
       lots: {
+        Relationships: [];
         Row: {
           id: string;
           auction_id: string;
@@ -136,6 +139,7 @@ export interface Database {
         };
       };
       lot_specs: {
+        Relationships: [];
         Row: {
           id: string;
           lot_id: string;
@@ -159,6 +163,7 @@ export interface Database {
         };
       };
       lot_images: {
+        Relationships: [];
         Row: {
           id: string;
           lot_id: string;
@@ -182,6 +187,7 @@ export interface Database {
         };
       };
       bid_history: {
+        Relationships: [];
         Row: {
           id: string;
           lot_id: string;
@@ -206,12 +212,37 @@ export interface Database {
           amount?: number;
         };
       };
+      lot_favorites: {
+        Relationships: [];
+        Row: {
+          user_id: string;
+          lot_id: string;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          lot_id: string;
+          created_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          lot_id?: string;
+          created_at?: string;
+        };
+      };
     };
     Views: Record<string, never>;
     Functions: {
       is_admin: {
         Args: Record<string, never>;
         Returns: boolean;
+      };
+      place_bid: {
+        Args: {
+          p_lot_id: string;
+          p_amount: number;
+        };
+        Returns: Database["public"]["Tables"]["bid_history"]["Row"];
       };
     };
     Enums: Record<string, never>;

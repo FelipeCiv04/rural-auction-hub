@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AuctionCard } from "@/components/catalog/AuctionCard";
 import { PageIntro } from "@/components/catalog/PageIntro";
 import { SiteLayout } from "@/components/layout/SiteLayout";
-import { getAuctions } from "@/services";
+import { loadAuctions } from "@/services";
 import { statusLabels, type AuctionStatus } from "@/types";
 
 export const Route = createFileRoute("/leiloes/")({
@@ -22,13 +22,14 @@ export const Route = createFileRoute("/leiloes/")({
       },
     ],
   }),
+  loader: () => loadAuctions(),
   component: AuctionsPage,
 });
 
 const groups: AuctionStatus[] = ["ao-vivo", "agendado", "encerrado"];
 
 function AuctionsPage() {
-  const auctions = getAuctions();
+  const auctions = Route.useLoaderData();
 
   return (
     <SiteLayout>

@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { LotCard } from "@/components/catalog/LotCard";
 import { PageIntro } from "@/components/catalog/PageIntro";
 import { SiteLayout } from "@/components/layout/SiteLayout";
-import { getLots } from "@/services";
+import { loadLots } from "@/services";
 
 export const Route = createFileRoute("/lotes/")({
   head: () => ({
@@ -21,11 +21,12 @@ export const Route = createFileRoute("/lotes/")({
       },
     ],
   }),
+  loader: () => loadLots(),
   component: LotsPage,
 });
 
 function LotsPage() {
-  const lots = getLots();
+  const lots = Route.useLoaderData();
 
   return (
     <SiteLayout>

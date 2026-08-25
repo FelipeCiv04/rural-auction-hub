@@ -6,7 +6,7 @@ import { AuctionCard } from "@/components/catalog/AuctionCard";
 import { CatalogButton } from "@/components/catalog/CatalogButton";
 import { LotCard } from "@/components/catalog/LotCard";
 import { SiteLayout } from "@/components/layout/SiteLayout";
-import { getAuctionById, getFeaturedLots, getUpcomingAuctions } from "@/services";
+import { loadAuctionById, loadFeaturedLots, loadUpcomingAuctions } from "@/services";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,14 +25,20 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
+  loader: async () => ({
+    upcoming: await loadUpcomingAuctions(3),
+    featured: await loadFeaturedLots(),
+    highlight: await loadAuctionById("liquidacao-genetica-prime"),
+  }),
   component: HomePage,
 });
 
 function HomePage() {
-  const upcoming = getUpcomingAuctions(3);
-  const featured = getFeaturedLots();
+  const { upcoming, featured, highlight: loadedHighlight } = Route.useLoaderData();
   // O banner destaca sempre a "Liquidação Genética Prime".
-  const highlight = getAuctionById("liquidacao-genetica-prime")!;
+  const highlight = loadedHighlight ?? upcoming[0];
+
+  if (!highlight) return null;
 
   return (
     <SiteLayout>

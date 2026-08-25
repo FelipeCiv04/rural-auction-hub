@@ -6,8 +6,8 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 
 let liveTickerCache: LiveTickerData | null = null;
 
-async function fetchLiveTickerFromSupabase(): Promise<void> {
-  if (!isSupabaseConfigured() || !supabase) return;
+async function fetchLiveTickerFromSupabase(): Promise<LiveTickerData | null> {
+  if (!isSupabaseConfigured() || !supabase) return null;
 
   try {
     // Find an auction that is live
@@ -17,10 +17,10 @@ async function fetchLiveTickerFromSupabase(): Promise<void> {
     const auctionsError = auctionsRes.error as unknown | null;
     if (auctionsError) {
       console.error("[supabase] failed to fetch live auction:", auctionsError);
-      return;
+      return null;
     }
     const liveAuction = auctions && auctions.length > 0 ? auctions[0] : null;
-    if (!liveAuction) return;
+    if (!liveAuction) return null;
 
     // Get lots for that auction and the current highest bid
     const lotsRes = await client
@@ -33,19 +33,21 @@ async function fetchLiveTickerFromSupabase(): Promise<void> {
     const lotsError = lotsRes.error as unknown | null;
     if (lotsError) {
       console.error("[supabase] failed to fetch lots for live auction:", lotsError);
-      return;
+      return null;
     }
 
     const topLot = lots && lots.length > 0 ? lots[0] : null;
-    if (!topLot) return;
+    if (!topLot) return null;
 
     liveTickerCache = {
       auctionTitle: liveAuction.title ?? "",
       currentLot: topLot.title ?? "",
       currentBid: topLot.current_bid ?? 0,
     };
+    return liveTickerCache;
   } catch (err) {
     console.error("[supabase] unexpected error fetching live ticker:", err);
+    return null;
   }
 }
 
@@ -58,4 +60,9 @@ if (isSupabaseConfigured()) {
  */
 export function getLiveTicker(): LiveTickerData {
   return liveTickerCache ?? mockLiveTicker;
+}
+
+export async function loadLiveTicker(): Promise<LiveTickerData> {
+  if (!isSupabaseConfigured()) return mockLiveTicker;
+  return liveTickerCache ?? (await fetchLiveTickerFromSupabase()) ?? mockLiveTicker;
 }
