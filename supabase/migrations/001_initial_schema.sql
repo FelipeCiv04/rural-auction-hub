@@ -18,15 +18,6 @@ begin
 end;
 $$ language plpgsql;
 
--- Função para verificar se o usuário atual é admin
-create or replace function public.is_admin()
-returns boolean as $$
-  select exists (
-    select 1 from public.profiles
-    where id = auth.uid() and role = 'admin'
-  );
-$$ language sql security definer stable;
-
 -- ---------------------------------------------------------------------------
 -- 1. profiles (vinculado ao auth.users)
 -- ---------------------------------------------------------------------------
@@ -48,6 +39,15 @@ comment on column public.profiles.role       is 'Papel do usuário: user ou admi
 create trigger profiles_updated_at
   before update on public.profiles
   for each row execute function public.update_updated_at();
+
+-- Função para verificar se o usuário atual é admin
+create or replace function public.is_admin()
+returns boolean as $$
+  select exists (
+    select 1 from public.profiles
+    where id = auth.uid() and role = 'admin'
+  );
+$$ language sql security definer stable;
 
 -- ---------------------------------------------------------------------------
 -- 2. auctions (leilões)
